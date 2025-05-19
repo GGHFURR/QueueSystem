@@ -20,7 +20,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col mt-0">
-                                                <h1 class="mb-2">{{ $seminar['nama'] }}</h1>
+                                                <h2 class="mb-2">{{ $seminar['nama'] }}</h2>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="stat text-primary">
@@ -63,7 +63,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col mt-0">
-                                                <h1 class="mb-2">{{ $seminar['nama'] }}</h1>
+                                                <h2 class="mb-2">{{ $seminar['nama'] }}</h2>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="stat text-primary">

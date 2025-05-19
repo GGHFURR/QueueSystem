@@ -11,5 +11,11 @@ use App\Http\Controllers\userController;
 Route::get('/', [userController::class, 'index']);
 Route::get('/admin', [activityController::class, 'index']);
 Route::get('/admin/detail/{id}', [activityController::class, 'detail'])->name('kegiatan.detail');
-
-
+Route::get('/kegiatan/tambah', [activityController::class, 'create']);
+Route::post('/kegiatan/tambah', [activityController::class, 'store']);
+Route::get('/login', function () {
+    return view('signin');
+});
+Route::get('/signup', function () {
+    return view('signup');
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 class activityController extends Controller
 {
     public function index()
@@ -69,4 +70,20 @@ class activityController extends Controller
 
         return view('kegiatan', compact('seminar'));
     }
+    public function create()
+    {
+        return view('tambah');
+    }
+
+
+
+    // Ini buat persiapan data store nya bisi perlu
+    // public function store(Request $request)
+    // {
+    //     // Validasi dan simpan data kegiatan
+    //     // contoh:
+    //     // Kegiatan::create($request->all());
+
+    //     return redirect('/kegiatan')->with('success', 'Kegiatan berhasil ditambahkan');
+    // }
 }
