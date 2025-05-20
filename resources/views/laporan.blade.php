@@ -61,9 +61,11 @@
                                                 <td>{{ rand(10, 100) }}</td>
                                                 <td>{{ rand(1, 10) }}</td>
                                                 <td class="d-flex align-items-center gap-2">
-                                                    <button type="button" class="btn btn-primary">
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="window.location.href='/laporan/1'">
                                                         <ion-icon name="create-outline"></ion-icon> Detail
                                                     </button>
+
 
                                                 </td>
                                             </tr>
