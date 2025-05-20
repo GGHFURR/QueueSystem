@@ -2,88 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Activity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class activityController extends Controller
 {
     public function index()
     {
-        $seminarList = [
-            [
-                'id' => 1,
-                'nama' => 'Seminar Profesi',
-                'tanggal' => '2025-07-25',
-                'kelas' => [
-                    [
-                        'nama' => 'Kelas A',
-                        'lokasi' => 'Ruang Kelas C-103',
-                        'peserta' => [
-                            ['nama' => 'Budi', 'nomor_antrian' => 1, 'status' => 'Hadir'],
-                            ['nama' => 'Sari', 'nomor_antrian' => 2, 'status' => 'Belum Hadir'],
-                        ],
-                    ],
-                    [
-                        'nama' => 'Kelas B',
-                        'lokasi' => 'Ruang Kelas C-104',
-                        'peserta' => [
-                            ['nama' => 'Andi', 'nomor_antrian' => 1, 'status' => 'Hadir'],
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $today = Carbon::today()->toDateString();
 
-        return view('activity', ['seminarList' => $seminarList]);
+        $activitiesToday = Activity::with(['classes.participants'])
+            ->whereDate('date', $today)
+            ->get();
+
+        $activitiesUpcoming = Activity::with(['classes.participants'])
+            ->whereDate('date', '>', $today)
+            ->get();
+
+        return view('Activity', compact('activitiesToday', 'activitiesUpcoming'));
     }
     public function detail($id)
     {
-        $seminarList = [
-            [
-                'id' => 1,
-                'nama' => 'Seminar Profesi',
-                'tanggal' => '2025-07-25',
-                'kelas' => [
-                    [
-                        'nama' => 'Kelas A',
-                        'lokasi' => 'Ruang Kelas C-103',
-                        'peserta' => [
-                            ['nama' => 'Budi', 'nomor_antrian' => 1, 'status' => 'Hadir'],
-                            ['nama' => 'Sari', 'nomor_antrian' => 2, 'status' => 'Belum Hadir'],
-                        ],
-                    ],
-                    [
-                        'nama' => 'Kelas B',
-                        'lokasi' => 'Ruang Kelas C-104',
-                        'peserta' => [
-                            ['nama' => 'Andi', 'nomor_antrian' => 1, 'status' => 'Hadir'],
-                        ],
-                    ],
-                ],
-            ],
-            // tambah seminar lain jika perlu
+        $activity = Activity::with(['classes.participants', 'classes.pengamat'])->findOrFail($id);
+        $pengamatList = User::all(); 
+
+        $activities = [
+            'id' => $activity->id,
+            'nama' => $activity->title,
+            'deskripsi' => $activity->description,
+            'tanggal' => $activity->date,
+            'kelas' => $activity->classes->map(function ($kelas) {
+                return [
+                    'id' => $kelas->id,
+                    'nama' => $kelas->class_code,
+                    'lokasi' => $kelas->lokasi ?? 'Lokasi belum diatur',
+                    'penguji' => $kelas->penguji ?? '-',
+                    'pengawas' => optional($kelas->pengamat)->name ?? '-',
+                    'peserta' => $kelas->participants->map(function ($peserta) {
+                        return [
+                            'nama' => $peserta->name,
+                            'nomor_antrian' => $peserta->queue_number ?? '-',
+                        ];
+                    })->toArray(),
+                ];
+            })->toArray(),
         ];
 
-        $seminar = collect($seminarList)->firstWhere('id', (int)$id);
-
-        if (!$seminar) {
-            abort(404);
-        }
-
-        return view('kegiatan', compact('seminar'));
+        return view('kegiatan', compact('activities', 'pengamatList'));
     }
     public function create()
     {
         return view('tambah');
     }
 
+    public function store(Request $request) {
 
+        $request->validate([
+            'title' => 'required|string|max:200',
+            'description' => 'required|string',
+            'tanggal' => 'required|date',
+            'waktu' => 'required|date_format:H:i',
+        ]);
 
-    // Ini buat persiapan data store nya bisi perlu
-    // public function store(Request $request)
-    // {
-    //     // Validasi dan simpan data kegiatan
-    //     // contoh:
-    //     // Kegiatan::create($request->all());
+        Activity::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'date' => $request->input('tanggal'),
+            'time' => $request->input('waktu'),
+            'created_by' => Auth::id(),
+        ]);
 
-    //     return redirect('/kegiatan')->with('success', 'Kegiatan berhasil ditambahkan');
-    // }
+        return redirect()->back()->with('success', 'Kegiatan berhasil ditambahkan');
+    }
 }

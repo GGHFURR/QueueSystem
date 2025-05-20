@@ -13,14 +13,14 @@
         <div class="col-xl-12">
             <div class="w-100">
                 <div class="row">
-                    @foreach ($seminarList as $seminar)
+                    @foreach ($activitiesToday as $activity)
                         <div class="col-sm-3 mb-4">
-                            <a href="{{ route('kegiatan.detail', $seminar['id']) }}" class="text-decoration-none text-dark">
+                            <a href="{{ route('kegiatan.detail', $activity->id) }}" class="text-decoration-none text-dark">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col mt-0">
-                                                <h2 class="mb-2">{{ $seminar['nama'] }}</h2>
+                                                <h2 class="mb-2">{{ $activity->title }}</h2>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="stat text-primary">
@@ -29,13 +29,13 @@
                                             </div>
                                         </div>
                                         <div class="col mt-0">
-                                            <h6 class="card-title">
-                                                {{ \Carbon\Carbon::parse($seminar['tanggal'])->format('d F Y') }}</h6>
+                                            <h6 class="card-title">{{ \Carbon\Carbon::parse($activity->date)->format('d F Y') }}</h6>
                                         </div>
                                         <div class="mb-0">
-                                            <span class="text-muted">{{ count($seminar['kelas']) }} Kelas</span>
-                                            <span class="text-muted"> | {{ count($seminar['kelas'][0]['peserta']) }}
-                                                Peserta</span>
+                                            <span class="text-muted">{{ $activity->classes->count() }} Kelas</span> |
+                                            <span an class="text-muted">
+                                                {{ $activity->classes->sum(fn($class) => $class->participants->count()) }} Peserta
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -56,14 +56,14 @@
         <div class="col-xl-12">
             <div class="w-100">
                 <div class="row">
-                    @foreach ($seminarList as $seminar)
+                    @foreach ($activitiesUpcoming as $activity)
                         <div class="col-sm-3 mb-4">
-                            <a href="{{ route('kegiatan.detail', $seminar['id']) }}" class="text-decoration-none text-dark">
+                            <a href="{{ route('kegiatan.detail', $activity->id) }}" class="text-decoration-none text-dark">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col mt-0">
-                                                <h2 class="mb-2">{{ $seminar['nama'] }}</h2>
+                                                <h2 class="mb-2">{{ $activity->title }}</h2>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="stat text-primary">
@@ -72,13 +72,13 @@
                                             </div>
                                         </div>
                                         <div class="col mt-0">
-                                            <h6 class="card-title">
-                                                {{ \Carbon\Carbon::parse($seminar['tanggal'])->format('d F Y') }}</h6>
+                                            <h6 class="card-title">{{ \Carbon\Carbon::parse($activity->date)->format('d F Y') }}</h6>
                                         </div>
                                         <div class="mb-0">
-                                            <span class="text-muted">{{ $seminar['kelas'][0]['lokasi'] }}</span>
-                                            <span class="text-muted"> | {{ count($seminar['kelas'][0]['peserta']) }}
-                                                Peserta</span>
+                                            <span class="text-muted">{{ $activity->classes->count() }} Kelas</span> |
+                                            <span class="text-muted">
+                                                {{ $activity->classes->sum(fn($class) => $class->participants->count()) }} Peserta
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

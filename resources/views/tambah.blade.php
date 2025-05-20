@@ -23,14 +23,14 @@
                                             <div class="mb-3">
                                                 <label for="nama" class="form-label"
                                                     style="font-size: 1.25rem;"><strong>Nama Kegiatan</strong></label>
-                                                <input type="text" name="nama" id="nama" class="form-control"
+                                                <input type="text" name="title" id="title" class="form-control"
                                                     placeholder="Contoh : Kegiatan Seminar XYZ" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nama" class="form-label"
                                                     style="font-size: 1.25rem;"><strong>Deskripsi
                                                         Kegiatan</strong></label>
-                                                <input type="text" name="nama" id="nama" class="form-control"
+                                                <input type="text" name="description" id="description" class="form-control"
                                                     placeholder="Masukkan deskripsi kegiatan" required>
                                             </div>
                                             <div class="mb-3">
@@ -38,16 +38,16 @@
                                                     style="font-size: 1.25rem;"><strong>Tanggal</strong></label>
                                                 <div class="row align-items-center">
                                                     <div class="col-md-5">
-                                                        <input type="date" name="tanggal-mulai" id="tanggal-mulai"
+                                                        <input type="date" name="tanggal" id="tanggal"
                                                             class="form-control" required>
                                                     </div>
-                                                    <div class="col-auto">
+                                                    {{-- <div class="col-auto">
                                                         <span class="mx-2">sampai</span>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <input type="date" name="tanggal-selesai" id="tanggal-selesai"
                                                             class="form-control" required>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="mb-6">
@@ -55,16 +55,16 @@
                                                     style="font-size: 1.25rem;"><strong>Waktu</strong></label>
                                                 <div class="row align-items-center">
                                                     <div class="col-md-5">
-                                                        <input type="time" name="waktu-mulai" id="waktu-mulai"
+                                                        <input type="time" name="waktu" id="waktu"
                                                             class="form-control" required>
                                                     </div>
-                                                    <div class="col-auto">
+                                                    {{-- <div class="col-auto">
                                                         <span class="mx-2">sampai</span>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <input type="time" name="waktu-selesai" id="waktu-selesai"
                                                             class="form-control" required>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
 

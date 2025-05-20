@@ -20,7 +20,11 @@
                     <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i>
                         Settings & Privacy</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="dropdown-item" type="submit">Logout</button>
+                    </form>
+                    {{-- <a class="dropdown-item" href="#">Log out</a> --}}
                 </div>
             </li>
         </ul>

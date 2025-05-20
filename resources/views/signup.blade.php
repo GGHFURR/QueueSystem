@@ -17,24 +17,39 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="m-sm-3">
-                                    <form>
+                                    @if ($errors->any())
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                    <form method="POST" action="/signup">
+                                        @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Nama</label>
                                             <input class="form-control form-control-lg" type="text" name="name"
-                                                placeholder="Enter your name" />
+                                                placeholder="Enter your name" required />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
                                             <input class="form-control form-control-lg" type="email" name="email"
-                                                placeholder="Enter your email" />
+                                                placeholder="Enter your email" required />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
                                             <input class="form-control form-control-lg" type="password" name="password"
-                                                placeholder="Enter password" />
+                                                placeholder="Enter password" required />
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Konfirmasi Password</label>
+                                            <input class="form-control form-control-lg" type="password" name="password_confirmation" 
+                                            placeholder="Konfirmasi Password" required>
+                                        </div>
+                                        
                                         <div class="d-grid gap-2 mt-3">
-                                            <a href="index.html" class="btn btn-lg btn-primary">Daftar</a>
+                                            <button type="submit" class="btn btn-lg btn-primary">Daftar</button>
+                                            {{-- <a href="index.html" class="btn btn-lg btn-primary">Daftar</a> --}}
                                         </div>
                                     </form>
                                 </div>
